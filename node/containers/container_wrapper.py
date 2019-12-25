@@ -2,7 +2,7 @@ from threading import Thread
 import time
 
 
-class Container_wrapper:
+class container_wrapper:
     def __init__(self, image, tag):
         self.name = image
         self.tag = tag
