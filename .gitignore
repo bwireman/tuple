@@ -130,5 +130,5 @@ dmypy.json
 
 
 .vscode/settings.json
-node/.lint-reqs
-node/.test-reqs
+.lint-reqs
+.test-reqs
