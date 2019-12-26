@@ -16,7 +16,7 @@ class container_wrapper:
         self.killed = False
 
     def heartbeat(self, func=None, rhythm=30):
-        while self.running:
+        while self.running and not self.killed:
             if func:
                 self.funcThread = Thread(target=func)
                 self.funcThread.start()
