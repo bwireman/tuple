@@ -7,7 +7,7 @@ def test_basic():
     cw.run(docker.from_env(), heartbeatRhythm=1)
     assert cw.get_status() == "running"
     cw.kill()
-    cw.get_status() == "stopped"
+    assert cw.get_status() == "exited"
 
 
 def test_basic_restart_true():
@@ -15,4 +15,4 @@ def test_basic_restart_true():
     cw.run(docker.from_env(), heartbeatRhythm=1)
     assert cw.get_status() == "running"
     cw.kill()
-    cw.get_status() == "stopped"
+    assert cw.get_status() == "exited"
