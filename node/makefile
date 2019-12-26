@@ -17,8 +17,8 @@ $(TEST-REQS):
 
 .PHONY: lint
 lint: $(LINT-REQS)
-	env/bin/flake8 . --exclude=./env --count --select=E9,F63,F7,F82 --show-source --statistics
-	env/bin/flake8 . --exclude=./env --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	env/bin/flake8 . --exclude=./env --count --show-source --statistics
+	env/bin/flake8 . --exclude=./env --count --exit-zero --max-complexity=10 --statistics
 
 .PHONY: test
 test: $(TEST-REQS)
