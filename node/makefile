@@ -1,4 +1,5 @@
 LINT-REQS = .lint-reqs
+TEST-REQS = .test-reqs
 
 
 deps:
@@ -6,12 +7,19 @@ deps:
 	env/bin/pip install -r requirements.txt
 
 clean:
-	rm -rf env $(LINT-REQS)
+	rm -rf env $(LINT-REQS) $(TEST-REQS)
 
 $(LINT-REQS):
-	env/bin/pip install flake8 black > $(LINT-REQS)
+	env/bin/pip install flake8 > $(LINT-REQS)
+
+$(TEST-REQS):
+	env/bin/pip install pytest > $(TEST-REQS)
 
 .PHONY: lint
 lint: $(LINT-REQS)
-	black .
-	flake8 . --exclude=./env
+	env/bin/flake8 . --exclude=./env --count --show-source --statistics
+	env/bin/flake8 . --exclude=./env --count --exit-zero --max-complexity=10 --statistics
+
+.PHONY: test
+test: $(TEST-REQS)
+	env/bin/pytest ./tests
