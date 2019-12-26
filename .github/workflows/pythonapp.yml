@@ -15,7 +15,7 @@ jobs:
         python-version: 3.7
     - name: make
       run: |
-        make
+        make -C ./node
     - name: make lint
       run: |
         make lint -C ./node
