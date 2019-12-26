@@ -15,13 +15,13 @@ class container_wrapper:
         self.heartbeatRhythm = None
         self.killed = False
 
-    def heartbeat(self, func=None, rhythm=30):
+    def heartbeat(self, func=None):
         while self.running and not self.killed:
             if func:
                 self.funcThread = Thread(target=func)
                 self.funcThread.start()
             self.running = self.get_status() == "running"
-            time.sleep(rhythm)
+            time.sleep(self.heartbeatRhythm)
 
         if self.restart and not self.killed:
             self.run(self.client, self.func, self.heartbeatRhythm)
@@ -29,9 +29,13 @@ class container_wrapper:
     def kill(self):
         self.running = False
         self.killed = True
+        self.container.kill()
+
+    def stop(self):
+        self.running = False
+        self.killed = True
         if self.funcThread:
             self.funcThread.join()
-        self.heartbeatThread.join()
         self.container.stop()
 
     def run(self, client, func=None, heartbeatRhythm=30):
@@ -41,7 +45,7 @@ class container_wrapper:
             self.client = client
             self.container = self.client.containers.run(self.image, detach=True)
             self.running = True
-            self.heartbeatThread = Thread(target=self.heartbeat, args=[func, heartbeatRhythm])
+            self.heartbeatThread = Thread(target=self.heartbeat, args=[func])
             self.heartbeatThread.start()
         else:
             # TODO: throw exception if all ready running
