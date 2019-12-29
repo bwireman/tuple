@@ -1,13 +1,13 @@
 LINT-REQS = .lint-reqs
 TEST-REQS = .test-reqs
-
+BLACK-REQS = .black-reqs
 
 deps:
 	python3 -m venv env
 	env/bin/pip install -r requirements.txt
 
 clean:
-	rm -rf env $(LINT-REQS) $(TEST-REQS) node/__pycache__ node/containers/__pycache__
+	rm -rf env $(LINT-REQS) $(TEST-REQS) $(BLACK-REQS) node/__pycache__ node/containers/__pycache__
 
 $(LINT-REQS):
 	env/bin/pip install flake8 > $(LINT-REQS)
@@ -15,10 +15,17 @@ $(LINT-REQS):
 $(TEST-REQS):
 	env/bin/pip install pytest > $(TEST-REQS)
 
+$(BLACK-REQS):
+	env/bin/pip install black > $(BLACK-REQS)
+
 .PHONY: lint
 lint: $(LINT-REQS)
 	env/bin/flake8 . --exclude=./env --count --show-source --statistics
 	env/bin/flake8 . --exclude=./env --count --exit-zero --max-complexity=10 --statistics
+
+.PHONY: format
+format: $(BLACK-REQS)
+	env/bin/black .
 
 .PHONY: test
 test: $(TEST-REQS)

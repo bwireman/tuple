@@ -13,7 +13,13 @@ class node(serializable.Serializable):
     def get_uid(self):
         return self._uid
 
-    def add_container(self, container_image, container_tag="latest", container_name=None, container_count=1):
+    def add_container(
+        self,
+        container_image,
+        container_tag="latest",
+        container_name=None,
+        container_count=1,
+    ):
         for _ in range(container_count):
             cw = container_wrapper.container_wrapper(container_image, container_tag)
             self.containers.append(cw)
@@ -23,6 +29,6 @@ class node(serializable.Serializable):
 
     def serialize(self):
         return {
-            'uid': self._uid, 
-            'containers': self.containers,
+            "uid": self._uid,
+            "containers": self.containers,
         }

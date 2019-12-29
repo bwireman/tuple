@@ -1,7 +1,7 @@
 from ..helpers import serializable
 from threading import Thread
 import time
-import docker
+
 
 class container_wrapper(serializable.Serializable):
     def __init__(self, image, tag="latest", name=None, restart=True):
@@ -17,7 +17,7 @@ class container_wrapper(serializable.Serializable):
         self.heartbeatRhythm = None
         self.killed = False
         self.launched = False
-        
+
     def heartbeat(self, func=None):
 
         while self.running and not self.killed:
@@ -69,5 +69,5 @@ class container_wrapper(serializable.Serializable):
             "tag": self.tag,
             "name": self.name,
             "status": self.get_status(),
-            "restart_on_failure": self.restart
+            "restart_on_failure": self.restart,
         }
