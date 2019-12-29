@@ -1,11 +1,13 @@
+from ..helpers import serializable
 from threading import Thread
 import time
+import docker
 
-
-class container_wrapper:
+class container_wrapper(serializable.Serializable):
     def __init__(self, image, tag="latest", name=None, restart=True):
         self.image = image
         self.tag = tag
+        self.name = name
         self.container = None
         self.running = False
         self.restart = restart
@@ -14,8 +16,10 @@ class container_wrapper:
         self.heartbeatThread = None
         self.heartbeatRhythm = None
         self.killed = False
-
+        self.launched = False
+        
     def heartbeat(self, func=None):
+
         while self.running and not self.killed:
             if func:
                 self.funcThread = Thread(target=func)
@@ -40,6 +44,7 @@ class container_wrapper:
 
     def run(self, client, func=None, heartbeatRhythm=30):
         if not self.running:
+            self.launched = True
             self.func = func
             self.heartbeatRhythm = heartbeatRhythm
             self.client = client
@@ -52,6 +57,17 @@ class container_wrapper:
             pass
 
     def get_status(self, reload=True):
-        if reload:
-            self.container.reload()
-        return self.container.status
+        if self.launched:
+            if reload:
+                self.container.reload()
+            return self.container.status
+        return "not started"
+
+    def serialize(self):
+        return {
+            "image": self.image,
+            "tag": self.tag,
+            "name": self.name,
+            "status": self.get_status(),
+            "restart_on_failure": self.restart
+        }
