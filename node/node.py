@@ -1,27 +1,28 @@
 import uuid
 import docker
-from containers.container_wrapper import container_wrapper
+from .helpers import serializable
+from .containers import container_wrapper
 
 
-class node:
+class node(serializable.Serializable):
     def __init__(self, env=None):
         self._uid = uuid.uuid1().hex
-        self.container_wrappers = list()
+        self.containers = list()
         self.env = env if env else docker.from_env()
 
-    def add_container(
-        self,
-        container_image,
-        container_tag="latest",
-        container_name=None,
-        container_count=1,
-    ):
+    def get_uid(self):
+        return self._uid
+
+    def add_container(self, container_image, container_tag="latest", container_name=None, container_count=1):
         for _ in range(container_count):
-            cw = container_wrapper(container_name, container_tag)
-            self.container_wrappers.append(cw)
+            cw = container_wrapper.container_wrapper(container_image, container_tag)
+            self.containers.append(cw)
             cw.run(self.env)
 
+        return self.containers
 
-if __name__ == "__main__":
-    n = node()
-    n.add_container("test", container_count=3)
+    def serialize(self):
+        return {
+            'uid': self._uid, 
+            'containers': self.containers,
+        }
