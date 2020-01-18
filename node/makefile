@@ -1,6 +1,7 @@
 LINT-REQS = .lint-reqs
 TEST-REQS = .test-reqs
 BLACK-REQS = .black-reqs
+export FLASK_APP = server.py
 
 deps:
 	python3 -m venv env
@@ -30,3 +31,6 @@ format: $(BLACK-REQS)
 .PHONY: test
 test: $(TEST-REQS)
 	env/bin/pytest ./tests
+
+serve:
+	flask run
