@@ -133,3 +133,4 @@ dmypy.json
 .lint-reqs
 .test-reqs
 .black-reqs
+*~

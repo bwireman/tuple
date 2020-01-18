@@ -8,7 +8,7 @@ deps:
 	env/bin/pip install -r requirements.txt
 
 clean:
-	rm -rf env $(LINT-REQS) $(TEST-REQS) $(BLACK-REQS) node/__pycache__ node/containers/__pycache__
+	rm -rf env $(LINT-REQS) $(TEST-REQS) $(BLACK-REQS) .pytest_cache __pycache__ containers/__pycache__ helpers/__pycache__ tests/containers/__pycache__
 
 $(LINT-REQS):
 	env/bin/pip install flake8 > $(LINT-REQS)
