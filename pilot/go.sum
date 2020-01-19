@@ -1,0 +1,3 @@
+github.com/bwireman/tuple v0.0.0-20200118032419-a7e9150eab9e h1:cA4XnRMTSLNRZXVUXq7KfkmaivvgGUN8uCvixbS+x5Y=
+github.com/satori/go.uuid v1.2.0 h1:0uYX9dsZ2yD7q2RtLRtPSdGDWzjeM3TbMJP9utgA0ww=
+github.com/satori/go.uuid v1.2.0/go.mod h1:dA0hQrYB0VpLJoorglMZABFdXlWrHn1NEOzdhQKdks0=
