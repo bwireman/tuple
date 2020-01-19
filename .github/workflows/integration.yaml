@@ -13,9 +13,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build containers
       run: make containers
+    
     - name: docker-compose up
       run: docker-compose up -d
       working-directory: ./integration_tests
     - name: Test
-      run: ./test.sh
+      run: ./tests.sh
       working-directory: ./integration_tests
