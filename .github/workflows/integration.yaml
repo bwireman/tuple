@@ -15,5 +15,7 @@ jobs:
       run: make containers
     - name: docker-compose up
       run: docker-compose up -d
+      working-directory: ./integration_tests
     - name: Test
-      run: ./integration_tests/test.sh
+      run: ./test.sh
+      working-directory: ./integration_tests
