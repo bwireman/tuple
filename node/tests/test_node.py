@@ -2,7 +2,7 @@ from .. import node
 
 
 def test_constructor():
-    n = node.node()
+    n = node.node("example.com", "vTEST")
     name = "node-test-constructor"
     n.add_pod("test", name, container_count=2)
     assert n.get_pod(name)[0].get_status() == "running"
@@ -16,10 +16,11 @@ def test_constructor():
 
 
 def test_serialize():
-    n = node.node()
+    n = node.node("example.com", "vTEST")
     name = "node-test-serialize"
     n.add_pod("test", name, container_count=2)
-    n.serialize()["pods"] = {
+    j = n.serialize() 
+    assert j["pods"] == {
         name: [
             {
                 "image": "test",
@@ -37,4 +38,6 @@ def test_serialize():
             },
         ]
     }
+    assert j["node_path"] == "example.com"
+    assert j["api_version"] == "vTEST"
     n.kill_pod(name)

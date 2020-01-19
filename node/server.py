@@ -5,11 +5,7 @@ from . import node
 app = Flask(__name__)
 app.json_encoder = json_encoder.serializeableJSONEncoder
 
-
-n = node.node()
-n.add_pod("test", "test", container_count=2)
-n.add_pod("test2", "test2", container_count=3)
-
+n = node.node("localhost:5000", "v0.1")
 
 @app.route("/")
 def summary():
@@ -20,12 +16,18 @@ def summary():
 def launch():
     j = request.get_json()
     containers = n.add_pod(
-        pod_image=j["image"],
-        pod_tag=j["tag"],
-        pod_name=j["name"],
-        container_count=j["count"],
+        pod_image=j["Image"],
+        pod_tag=j["Tag"],
+        pod_name=j["Name"],
+        container_count=j["Count"],
     )
     return jsonify(containers)
+
+@app.route("/register", methods=["POST"])
+def register():
+    j = request.get_json()
+    nr = n.register(j["path"])
+    return jsonify(nr)
 
 
 if __name__ == "__main__":
