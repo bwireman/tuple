@@ -1,0 +1,17 @@
+name: Integration Tests
+
+on: 
+  pull_request:
+  push:
+    branches: 
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker-compose up
+      run: docker-compose up -d
+    - name: Test
+      run: ./integration_tests/test.sh
