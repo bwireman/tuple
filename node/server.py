@@ -7,6 +7,7 @@ app.json_encoder = json_encoder.serializeableJSONEncoder
 
 n = node.node("localhost:5000", "v0.1")
 
+
 @app.route("/")
 def summary():
     return jsonify(n)
@@ -22,6 +23,7 @@ def launch():
         container_count=j["Count"],
     )
     return jsonify(containers)
+
 
 @app.route("/register", methods=["POST"])
 def register():

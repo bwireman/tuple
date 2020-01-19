@@ -4,6 +4,7 @@ from .helpers import serializable
 from .containers import container_wrapper
 import requests
 
+
 class node(serializable.Serializable):
     def __init__(self, node_path, api_version, env=None):
         self.registered = False
@@ -63,7 +64,7 @@ class node(serializable.Serializable):
             "pods": {p: [cw.serialize() for cw in v] for p, v in self.pods.items()},
             "registered": self.registered,
             "node_path": self.node_path,
-            "api_version": self.api_version
+            "api_version": self.api_version,
         }
 
     def register(self, pilot_path):
@@ -74,11 +75,11 @@ class node(serializable.Serializable):
         nodeRegistry = {
             "node_path": self.node_path,
             "uuid": self.get_uid(),
-            "api_version": self.api_version
+            "api_version": self.api_version,
         }
 
         node_path = pilot_path + "/" + self.api_version + "/register"
-        print (node_path)
-        print (nodeRegistry)
+        print(node_path)
+        print(nodeRegistry)
         r = requests.post(node_path, json=nodeRegistry)
         return r.status_code, r.reason

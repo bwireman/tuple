@@ -19,7 +19,7 @@ def test_serialize():
     n = node.node("example.com", "vTEST")
     name = "node-test-serialize"
     n.add_pod("test", name, container_count=2)
-    j = n.serialize() 
+    j = n.serialize()
     assert j["pods"] == {
         name: [
             {
