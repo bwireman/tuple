@@ -1,0 +1,3 @@
+[submodule "docker-compose-actions-workflow"]
+	path = submodules/docker-compose-actions-workflow
+	url = git@github.com:bwireman/docker-compose-actions-workflow.git
