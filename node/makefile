@@ -1,23 +1,28 @@
 LINT-REQS = .lint-reqs
 TEST-REQS = .test-reqs
 BLACK-REQS = .black-reqs
-export FLASK_APP = server.py
+UWSGI-REQS = .uwsgi-reqs
 
-deps:
+export FLASK_APP = ./node/server.py
+
+env:
 	python3 -m venv env
 	env/bin/pip install -r requirements.txt
 
 clean:
-	rm -rf env $(LINT-REQS) $(TEST-REQS) $(BLACK-REQS) .pytest_cache __pycache__ containers/__pycache__ helpers/__pycache__ tests/containers/__pycache__
+	rm -rf *.pyc env $(LINT-REQS) $(TEST-REQS) $(BLACK-REQS) $(UWSGI-REQS) .pytest_cache __pycache__ node/containers/__pycache__ node/helpers/__pycache__ node/tests/__pycache__ node/api/__pycache__
 
-$(LINT-REQS):
+$(LINT-REQS): env
 	env/bin/pip install flake8 > $(LINT-REQS)
 
-$(TEST-REQS):
+$(TEST-REQS): env
 	env/bin/pip install pytest > $(TEST-REQS)
 
-$(BLACK-REQS):
+$(BLACK-REQS): env
 	env/bin/pip install black > $(BLACK-REQS)
+
+$(UWSGI-REQS): env
+	env/bin/pip install uwsgi > $(UWSGI-REQS)
 
 .PHONY: lint
 lint: $(LINT-REQS)
@@ -30,7 +35,11 @@ format: $(BLACK-REQS)
 
 .PHONY: test
 test: $(TEST-REQS)
-	env/bin/pytest ./tests
+	env/bin/pytest ./node/tests
 
 serve:
-	flask run
+	env/bin/flask run
+
+.PHONY: uwsgi
+uwsgi: $(UWSGI-REQS)
+	env/bin/uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi -H env/
