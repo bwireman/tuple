@@ -2,7 +2,7 @@ version: '3'
 services:
   node:
     image: node:latest
-    links:
-    - pilot
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
   pilot:
     image: pilot:latest
