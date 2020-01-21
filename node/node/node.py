@@ -8,7 +8,7 @@ import requests
 class node(serializable.Serializable):
     def __init__(self, node_path, api_version, env=None):
         self.registered = False
-        self._uid = uuid.uuid1().hex
+        self._uid = str(uuid.uuid4())
         self.pods = dict()
         self.env = env if env else docker.from_env()
         self.pilot_path = None
@@ -79,7 +79,6 @@ class node(serializable.Serializable):
         }
 
         node_path = pilot_path + "/" + self.api_version + "/register"
-        print(node_path)
-        print(nodeRegistry)
+
         r = requests.post(node_path, json=nodeRegistry)
         return r.status_code, r.reason

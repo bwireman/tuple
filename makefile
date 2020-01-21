@@ -1,15 +1,21 @@
 build:
-	make build -C ./pilot
-	make -C ./node
+	make build -s -C ./pilot
+	make -s -C ./node
 
 clean:
-	make clean -C ./pilot
-	make clean -C ./node
+	make clean -s -C ./pilot
+	make clean -s -C ./node
 
 test:
-	make test -C ./pilot
-	make test -C ./node
+	make test -s -C ./pilot
+	make test -s -C ./node
 
-containers:
-	docker build -f node.dockerfile -t node .
-	docker build -f pilot.dockerfile -t pilot .
+test-image:
+	docker build . --file ./node/node/tests/dockerfile --tag test
+
+integration-test:
+	make test -s -C integration_tests
+
+containers: clean
+	docker build --no-cache -f node.dockerfile -t node .
+	docker build --no-cache -f pilot.dockerfile -t pilot .
