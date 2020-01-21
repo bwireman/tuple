@@ -129,9 +129,10 @@ dmypy.json
 .pyre/
 
 
-.vscode/settings.json
+.vscode/
 .lint-reqs
 .test-reqs
 .black-reqs
+.wsgui-reqs
 *~
 pilot/pilot
