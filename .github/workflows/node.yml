@@ -18,7 +18,7 @@ jobs:
       with:
         python-version: 3.7
     - name: Build test image
-      run: docker build ./node/tests --file ./node/tests/dockerfile --tag test
+      run: docker build ./node/node/tests --file ./node/node/tests/dockerfile --tag test
     - name: make
       run: |
         make -C ./node

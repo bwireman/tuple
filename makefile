@@ -5,7 +5,6 @@ build:
 clean:
 	make clean -s -C ./pilot
 	make clean -s -C ./node
-	make clean -s -C ./integration_tests
 
 test:
 	make test -s -C ./pilot
