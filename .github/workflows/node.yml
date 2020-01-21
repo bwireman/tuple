@@ -7,10 +7,9 @@ on:
       - master
 
 jobs:
-  build:
-
+  test:
+    name: Test Node
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.7
@@ -18,13 +17,13 @@ jobs:
       with:
         python-version: 3.7
     - name: Build test image
-      run: docker build ./node/node/tests --file ./node/node/tests/dockerfile --tag test
-    - name: make
+      run: make test-image
+    - name: Build Node
       run: |
         make -C ./node
-    - name: make lint
+    - name: Lint
       run: |
         make lint -C ./node
-    - name: make test
+    - name: Test
       run: |
         make test -C ./node

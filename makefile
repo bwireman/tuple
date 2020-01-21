@@ -10,6 +10,9 @@ test:
 	make test -s -C ./pilot
 	make test -s -C ./node
 
+test-image:
+	docker build . --file ./node/node/tests/dockerfile --tag test
+
 integration-test:
 	make test -s -C integration_tests
 

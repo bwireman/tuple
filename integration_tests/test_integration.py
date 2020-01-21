@@ -45,7 +45,7 @@ def test_launch():
     assert pilot_status == expected_registered 
 
     # launch test pod
-    launched = post("http://pilot:5001/v0-1/launch", { "image":"ubuntu", "tag":"latest", "name":"TEST", "count":2 })
+    launched = post("http://pilot:5001/v0-1/launch", { "image":"test", "tag":"latest", "name":"TEST", "count":2 })
     assert launched == "200 OK"
 
     node_status_launched = get("http://node:5000/v0-1/")
@@ -55,14 +55,14 @@ def test_launch():
         "pods": {
             "TEST": [
                 {
-                    "image": "ubuntu",
+                    "image": "test",
                     "name": "TEST-0",
                     "restart_on_failure": True,
                     "status": "running",
                     "tag": "latest",
                 },
                 {
-                    "image": "ubuntu",
+                    "image": "test",
                     "name": "TEST-1",
                     "restart_on_failure": True,
                     "status": "running",

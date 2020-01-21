@@ -8,11 +8,14 @@ on:
 
 jobs:
   test:
+    name: Test Integration
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build containers
       run: make containers
     
+    - name: Build Test Image
+      run: make test-image
     - name: Test
       run: make integration-test
