@@ -4,7 +4,7 @@ clean:
 	docker rm -f TEST-1
 	docker rm -f TEST-0
 
-test: test-image
+test: 
 	docker build . -f tester.dockerfile -t tester
 	docker-compose up --force-recreate -d
 	docker run --network integration_tests_default tester
