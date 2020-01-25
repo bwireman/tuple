@@ -1,5 +1,5 @@
 build:
-	make build -s -C ./pilot
+	make pilot -s -C ./pilot
 	make -s -C ./node
 
 clean:
