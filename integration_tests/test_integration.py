@@ -73,4 +73,4 @@ def test_launch():
         "registered": True,
         "uuid": node_uuid,
     }
-    assert node_status_launched == node_status_launched
+    assert node_status_launched == node_status_launched_expected
